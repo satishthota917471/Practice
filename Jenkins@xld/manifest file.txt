@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udm.DeploymentPackage application="DemoApp" version="${XLD_NUMBER}">
+<application/>
+<orchestrator/>
+<deployables>
+<tomcat.War file="/vprofile-v1.war" name="/vprofile">
+<tags/>
+<scanPlaceholders>false</scanPlaceholders>
+<preScannedPlaceholders>true</preScannedPlaceholders>
+</tomcat.War>
+</deployables>
+<applicationDependencies/>
+<dependencyResolution>LATEST</dependencyResolution>
+<undeployDependencies>false</undeployDependencies>
+<templates/>
+<boundTemplates/>
+</udm.DeploymentPackage>

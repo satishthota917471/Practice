@@ -1,0 +1,28 @@
+node (''){ 
+
+properties([
+
+  parameters([
+
+    string(name: '${XLD_NUMBER}', defaultValue: '{BUILD_NUMBER}.0', description: 'Version Number to use ?' )
+
+   ])
+
+])
+ stage('Checkout') {  
+    git url: 'https://github.com/satishthota917471/practice1.git'
+ }
+  stage('Build') {
+    sh 'mvn install'
+ }
+
+  stage('Package') {  
+    xldCreatePackage artifactsPath: '/target', manifestPath: 'deployit-manifest.xml', darPath: '$JOB_NAME-$BUILD_NUMBER.0.dar'  
+  }  
+  stage('Publish') {  
+    xldPublishPackage serverCredentials: 'Admin', darPath: '$JOB_NAME-$BUILD_NUMBER.0.dar'
+  } 
+  stage('Deploy') {  
+    xldDeploy serverCredentials: 'Admin', environmentId: 'Environments/Dev/Dev', packageId: 'Applications/DemoApp/$BUILD_NUMBER.0'
+  }  
+}
