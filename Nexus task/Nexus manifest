@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udm.DeploymentPackage application="DemoApp" version="v-41">
+<application/>
+<orchestrator/>
+<deployables>
+<tomcat.War name="/vprofile">
+<tags/>
+<scanPlaceholders>false</scanPlaceholders>
+<preScannedPlaceholders>true</preScannedPlaceholders>
+<placeholders/>
+<checksum>87850d280bb8febd75c7ef83d35accb2c5f0be5c8f1b09184b6805d22c4132bf</checksum>
+<fileUri>http://192.168.56.116:8081/repository/vprofile/XLDeploy/v1/41/v1-41.war</fileUri>
+</tomcat.War>
+</deployables>
+<applicationDependencies/>
+<dependencyResolution>LATEST</dependencyResolution>
+<undeployDependencies>false</undeployDependencies>
+<templates/>
+<boundTemplates/>
+</udm.DeploymentPackage>

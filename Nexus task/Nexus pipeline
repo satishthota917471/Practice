@@ -1,0 +1,42 @@
+node (''){ 
+properties([
+
+  parameters([
+
+    string(name: 'xld', defaultValue: '${xld}', description: 'Version Number to use ?' )
+
+   ])
+
+])
+ stage('Checkout') {  
+    git url: 'https://github.com/satishthota917471/practice1.git'
+ }
+  stage('Build') {
+    sh 'mvn install'
+ }
+ stage("publish to nexus") {
+nexusArtifactUploader(	nexusVersion: 'nexus3',protocol: 'http',
+                            nexusUrl: '192.168.56.116:8081',
+                            groupId: 'XLDeploy',
+                            version: '${BUILD_ID}',
+                            repository: 'vprofile',
+                            credentialsId: '370b5cb9-1657-4ce2-ab09-f571076d72d4',
+                            artifacts: [
+                                // Artifact generated such as .jar, .ear and .war files.
+                                [artifactId: 'v1',
+                                classifier: '',
+                                file: 'target/vprofile-v1.war',
+                                type: 'war']]
+                                
+                        );
+}
+ stage('Package') {  
+    xldCreatePackage artifactsPath: 'http://192.168.56.116:8081/repository/vprofile/XLDeploy/v1/${BUILD_NUMBER}/v1-${BUILD_NUMBER}.war', manifestPath: 'deployit-manifest.xml', darPath: 'DemoApp-$xld.dar'  
+  }  
+  stage('Publish') {  
+    xldPublishPackage serverCredentials: 'Admin', darPath: 'DemoApp-$xld.dar'
+  } 
+    stage('Deploy') {  
+    xldDeploy serverCredentials: 'Admin', environmentId: 'Environments/Dev/Dev', packageId: 'Applications/DemoApp/$xld'
+  }  
+}
